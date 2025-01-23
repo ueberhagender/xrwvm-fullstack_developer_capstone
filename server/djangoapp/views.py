@@ -1,11 +1,11 @@
 # Uncomment the required imports before adding the code
 
-from django.shortcuts import render
-#from django.http import HttpResponseRedirect, HttpResponse
+# from django.shortcuts import render
+# from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
-#from django.shortcuts import get_object_or_404, render, redirect
+# from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
-#from django.contrib import messages
+# from django.contrib import messages
 
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
@@ -66,7 +66,7 @@ def registration(request):
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except Exception as e:
+    except Exception:
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
 
@@ -119,7 +119,9 @@ def get_dealer_reviews(request, dealer_id):
     if dealer_id:
         reviews = get_request("/fetchReviews/dealer/" + str(dealer_id))
         for review_detail in reviews:
-            review_analysis = analyze_review_sentiments(review_detail["review"])
+            review_analysis = analyze_review_sentiments(
+                review_detail["review"]
+            )
             if review_analysis is None:
                 return JsonResponse(
                     {"status": 500, "message": "Sentiment analysis failed"}
@@ -147,7 +149,7 @@ def add_review(request):
         try:
             post_review(data)
             return JsonResponse({"status": 200})
-        except Exception as e:
+        except Exception:
             return JsonResponse({
                 "status": 401, "message": "Error in posting review"
             })
