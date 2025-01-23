@@ -1,7 +1,6 @@
 # Uncomment the following imports before adding the Model code
 
 from django.db import models
-from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import datetime
 
@@ -44,8 +43,14 @@ class CarModel(models.Model):
 
     year = models.IntegerField(
         default=2025,
-        validators=[MaxValueValidator(datetime.now().year), MinValueValidator(1900)],
+        validators=[
+            MaxValueValidator(datetime.now().year),
+            MinValueValidator(1900)
+        ],
     )
 
     def __str__(self):
-        return f"{self.name} by {self.car_make.name} is a {self.type} and was built in {self.year}. It is available with dealer {self.dealerId}"
+        return (
+            f"{self.name} by {self.car_make.name} is a {self.type}"
+            f"and was built in {self.year}. It is available with dealer {self.dealerId}"
+        )
