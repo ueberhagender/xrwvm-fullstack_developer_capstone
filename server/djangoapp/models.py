@@ -52,6 +52,6 @@ class CarModel(models.Model):
     def __str__(self):
         return (
             f"""{self.name} by {self.car_make.name} is a {self.type}
-            and was built in {self.year}. It is available with 
+            and was built in {self.year}. It is available with
             dealer {self.dealerId}"""
         )
