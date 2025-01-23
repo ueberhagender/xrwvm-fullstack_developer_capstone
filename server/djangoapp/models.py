@@ -7,6 +7,7 @@ from datetime import datetime
 
 # Create your models here.
 
+
 # <HINT> Create a Car Make model `class CarMake(models.Model)`:
 # - Name
 # - Description
@@ -18,6 +19,7 @@ class CarMake(models.Model):
 
     def __str__(self):
         return f"{self.name}: {self.description}"
+
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 # - Many-To-One relationship to Car Make model (One Car Make has many
@@ -34,17 +36,15 @@ class CarModel(models.Model):
     dealerId = models.IntegerField(default=0)
 
     CAR_TYPES = [
-        ('SEDAN', 'Sedan'),
-        ('SUV', 'SUV'),
-        ('WAGON', 'Wagon'),
+        ("SEDAN", "Sedan"),
+        ("SUV", "SUV"),
+        ("WAGON", "Wagon"),
     ]
-    type = models.CharField(max_length=10, choices=CAR_TYPES, default='SUV')
+    type = models.CharField(max_length=10, choices=CAR_TYPES, default="SUV")
 
-    year = models.IntegerField(default=2025,
-        validators=[
-            MaxValueValidator(datetime.now().year),
-            MinValueValidator(1900)
-        ]
+    year = models.IntegerField(
+        default=2025,
+        validators=[MaxValueValidator(datetime.now().year), MinValueValidator(1900)],
     )
 
     def __str__(self):
