@@ -107,9 +107,11 @@ def get_dealer_reviews(request, dealer_id):
     if (dealer_id):
         reviews = get_request("/fetchReviews/dealer/" + str(dealer_id))
         for review_detail in reviews:
-            review_analysis = analyze_review_sentiment(review_detail["review"])
-            print(review_analysis)
-            review_detail['sentiment'] = review_analysis['sentiment']
+            review_analysis = analyze_review_sentiments(review_detail["review"])
+            if review_analysis is None:
+                return JsonResponse({"status": 500, "message": "Sentiment analysis failed"})
+            else:
+                review_detail['sentiment'] = review_analysis['sentiment']
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
         return JsonResponse({"status": 406, "message": "Invalid Dealer ID."})
